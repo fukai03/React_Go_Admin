@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import axios from 'axios'
 
 const request = axios.create({
@@ -17,9 +18,11 @@ request.interceptors.request.use(config => {
 // 响应拦截器
 request.interceptors.response.use(response => {
     // 对响应数据做点什么
-    return response
+    console.log('response', response);
+    return response.data || response
 }, error => {
-    // 对响应错误做点什么
+    // 对响应错误统一处理
+    message.error(error.response.data.msg || '请求错误，请重试！')
     return Promise.reject(error)
 })
 

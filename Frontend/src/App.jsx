@@ -1,47 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { register, login } from './utils/api.js';
-import { stringify } from './utils/index.js';
+import { Suspense, useState } from "react";
+import "./App.css";
+import { register, login } from "./utils/api.js";
+import { stringify } from "./utils/index.js";
+import { Provider } from "mobx-react";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import { ConfigProvider, Spin } from "antd";
+import zhCN from "antd/locale/zh_CN";
+import { routes } from "./routes";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  const testApi = async () => {
-    const data = {password: 'test123', telephone: '12345678901'}
-    
-    const res = await login(stringify(data));
-    console.log(res);
-  }
+  const Element = () => useRoutes(routes);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <button onClick={testApi}>
-          test api
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ConfigProvider locale={zhCN}>
+        <Suspense fallback={<Spin />}>
+          <Router>
+            <Element />
+          </Router>
+        </Suspense>
+      </ConfigProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

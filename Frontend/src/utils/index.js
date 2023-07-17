@@ -31,7 +31,18 @@ function stringify(data = {}) {
     }
     return formData;
 }
+// 防抖
+function debounce(fn, delay) {
+    let timer = null;
+    return function () {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(fn, delay);
+    };
+}
 
 export {
-    stringify
+    stringify,
+    debounce
 }

@@ -4,6 +4,7 @@ import (
 	"ginEssential/common"
 	"ginEssential/modal"
 	"ginEssential/utils"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -113,8 +114,18 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	// 验证通过，发放token
-	token := "ejplfnsadkjfnaskjdlfnasldf"
+	// 验证通过，使用jwt包发放token
+	token, err := common.ReleaseToken(user)
+	// 创建token失败时
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"code": 500,
+			"msg":  "系统异常",
+		})
+		// 记录日志
+		log.Printf("token generate error: %v", err)
+		return
+	}
 
 	// 返回结果
 	ctx.JSON(200, gin.H{
