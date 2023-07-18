@@ -1,7 +1,7 @@
 package common
 
 import (
-	"ginEssential/modal"
+	"ginEssential/model"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -15,7 +15,7 @@ type Claims struct {
 }
 
 // 根据用户信息生成token
-func ReleaseToken(user modal.User) (string, error) {
+func ReleaseToken(user model.User) (string, error) {
 	// 设置token有效时间,7天
 	exirationTime := time.Now().Add(7 * 24 * time.Hour)
 	claims := &Claims{
@@ -35,4 +35,14 @@ func ReleaseToken(user modal.User) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+}
+
+// 解析token
+func ParseToken(tokenString string) (*jwt.Token, *Claims, error) {
+	claims := &Claims{}
+	// 解析token,第三个参数是一个回调函数，用于在token过期后执行续签操作
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+	return token, claims, err
 }

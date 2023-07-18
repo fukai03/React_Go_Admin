@@ -2,7 +2,7 @@ package common
 
 import (
 	"fmt"
-	"ginEssential/modal"
+	"ginEssential/model"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -32,7 +32,7 @@ func InitDB() *gorm.DB {
 		panic("failed to connect database, err: " + err.Error())
 	}
 	// 创建数据表
-	db.AutoMigrate(&modal.User{})
+	db.AutoMigrate(&model.User{})
 	DB = db
 	return db
 }

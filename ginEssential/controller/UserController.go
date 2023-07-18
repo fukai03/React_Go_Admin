@@ -2,7 +2,8 @@ package controller
 
 import (
 	"ginEssential/common"
-	"ginEssential/modal"
+	"ginEssential/dto"
+	"ginEssential/model"
 	"ginEssential/utils"
 	"log"
 	"net/http"
@@ -56,7 +57,7 @@ func Register(ctx *gin.Context) {
 		})
 		return
 	}
-	newUser := modal.User{
+	newUser := model.User{
 		Name:      name,
 		Telephone: telephone,
 		Password:  string(hasedPassword),
@@ -95,7 +96,7 @@ func Login(ctx *gin.Context) {
 		return
 	}
 	// 判断手机号是否存在
-	var user modal.User
+	var user model.User
 	db.Where("telephone = ?", telephone).First(&user)
 	if user.ID == 0 {
 		ctx.JSON(http.StatusUnprocessableEntity, gin.H{
@@ -135,9 +136,18 @@ func Login(ctx *gin.Context) {
 	})
 }
 
+// Info 用户信息,此时用户已经通过了中间件的验证，可以从上下文中获取用户信息
+func Info(ctx *gin.Context) {
+	user, _ := ctx.Get("user")
+	ctx.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"data": gin.H{"user": dto.ToUserDto(user.(model.User))},
+	})
+}
+
 // 判断手机号是否存在
 func isTelephoneExist(db *gorm.DB, telephone string) bool {
-	var user modal.User
+	var user model.User
 	db.Where("telephone = ?", telephone).First(&user)
 	// if user.ID != 0 {
 	// 	return true
