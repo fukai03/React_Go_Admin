@@ -1,5 +1,5 @@
-import request from "./request";
-import {stringify} from "./index";
+import request from './request';
+import {stringify} from './index';
 
 const register = (data = {}) => {
     return request({

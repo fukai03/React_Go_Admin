@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default () => {
-  return (
-    <div>Login</div>
-  )
+export default function Index() {
+    return (
+        <div>Login</div>
+    )
 }

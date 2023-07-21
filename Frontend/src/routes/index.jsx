@@ -1,6 +1,6 @@
-import React, {lazy, Suspense} from "react";
-import { Spin } from "antd";
-import { Navigate } from "react-router-dom";
+import React, {lazy, Suspense} from 'react';
+import { Spin } from 'antd';
+import { Navigate } from 'react-router-dom';
 import {
     HomeOutlined,
     UserOutlined,
@@ -23,6 +23,7 @@ const User = lazy(() => import('../pages/user'));
 const ErrorPage = lazy(() => import('../pages/404'));
 const IndustryProject = lazy(() => import('../pages/project/industry'));
 const GovernmentProject = lazy(() => import('../pages/project/government'));
+const AITranslate = lazy(() => import('../pages/ai_translate'));
 
 
 
@@ -61,6 +62,12 @@ export const mainRoutes = {
                 }
             ]
 
+        },
+        {
+            path: 'ai_translate',
+            label: 'AI翻译',
+            element: Loading(<AITranslate />),
+            icon: <SettingOutlined />
         }
     ]
 }
