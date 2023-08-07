@@ -42,7 +42,21 @@ function debounce(fn, delay) {
     };
 }
 
+// sessionStorage保存token
+function setToken(token) {
+    sessionStorage.setItem('USER_TOKEN', token);
+}
+function getToken() {
+    return sessionStorage.getItem('USER_TOKEN');
+}
+function removeToken() {
+    sessionStorage.removeItem('USER_TOKEN');
+}
+
 export {
     stringify,
-    debounce
+    debounce,
+    setToken,
+    getToken,
+    removeToken
 }

@@ -10,6 +10,7 @@
   - Ant Design
   - React Router
   - axios
+  - vite
 
 - 后端：
   - Golang

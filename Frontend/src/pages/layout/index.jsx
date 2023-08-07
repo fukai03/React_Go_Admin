@@ -1,20 +1,32 @@
-import React, {useState} from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import { Outlet, Link, useNavigate} from 'react-router-dom';
 import { mainRoutes } from '../../routes';
 import { Layout, Menu, theme, Avatar, Dropdown, Button, Popover } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import './index.less';
-import { debounce } from 'utils';
-import { set } from 'mobx';
+import { debounce, removeToken } from 'utils';
+import { getUserInfo } from 'utils/api';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 export default function Index() {
     const [userOptionsVisible, setUserOptionsVisible] = useState(true);
+    const [firstLetter, setFirstLetter] = useState('');
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+    const navigate = useNavigate();
+
+    const getUser = async () => {
+        const res = await getUserInfo();
+        console.log(res);
+        setFirstLetter(res?.data?.user?.name?.slice(0, 1));
+    };
+
+    useEffect(() => {
+        getUser()
+    }, [])
 
     const createMenu = (routes, path = '/') => {
         return routes.map((route) => {
@@ -46,11 +58,13 @@ export default function Index() {
     };
     const logoutClick = () => {
         console.log('logoutClick');
+        removeToken();
+        navigate('/login');
     };
     const userOptionsItems = (
         <div className="userOption">
-            <div onClick={userInfoClick}>用户中心</div>
-            <div onClick={logoutClick}>退出登录</div>
+            <div className="userOption-item" onClick={userInfoClick}>用户中心</div>
+            <div className="userOption-item" onClick={logoutClick}>退出登录</div>
         </div>
     )
 
@@ -85,9 +99,14 @@ export default function Index() {
                     <Popover
                         content={userOptionsItems}
                     >
-                        <Avatar
-                            icon={<UserOutlined />}
-                        />
+                        {
+                            firstLetter ?
+                                <Avatar>{firstLetter}</Avatar>
+                                :
+                                <Avatar
+                                    icon={<UserOutlined />}
+                                />
+                        }
                     </Popover>
                 </Header>
                 <Content

@@ -3,6 +3,7 @@ package common
 import (
 	"fmt"
 	"ginEssential/model"
+	"net/url"
 
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
@@ -20,13 +21,15 @@ func InitDB() *gorm.DB {
 	username := viper.GetString("datasource.username") // 数据库用户名
 	password := viper.GetString("datasource.password") // 数据库密码,填写mysql设置的密码
 	charset := viper.GetString("datasource.charset")   // 编码方式
-	args := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true",
+	loc := viper.GetString("datasource.loc")           // 时区
+	args := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true&loc=%s",
 		username,
 		password,
 		host,
 		port,
 		database,
 		charset,
+		url.QueryEscape(loc), // url.QueryEscape()对loc进行转义
 	)
 	db, err := gorm.Open(mysql.Open(args), &gorm.Config{})
 	if err != nil {

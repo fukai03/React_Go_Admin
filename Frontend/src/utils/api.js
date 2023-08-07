@@ -18,7 +18,16 @@ const login = (data = {}) => {
     })
 }
 
+// 获取用户信息
+const getUserInfo = () => {
+    return request({
+        url: '/auth/info',
+        method: 'get',
+    })
+}
+
 export {
     register,
-    login
+    login,
+    getUserInfo
 }
