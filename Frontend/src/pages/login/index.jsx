@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Form, Input, Button, Checkbox, message, Tabs } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, PhoneOutlined } from '@ant-design/icons';
 import './index.less';
 import { login, register } from 'utils/api'
 import { useNavigate } from 'react-router-dom';
@@ -60,8 +60,8 @@ const Login = observer(() => {
                 ]}
             >
                 <Input
-                    prefix={<UserOutlined className="site-form-item-icon" />}
-                    placeholder="Username"
+                    prefix={<PhoneOutlined className="site-form-item-icon" />}
+                    placeholder="手机号码"
                 />
             </Form.Item>
             <Form.Item
@@ -123,7 +123,7 @@ const Login = observer(() => {
                 ]}
             >
                 <Input
-                    prefix={<UserOutlined className="site-form-item-icon" />}
+                    prefix={<PhoneOutlined className="site-form-item-icon" />}
                     placeholder="请输入手机号"
                 />
             </Form.Item>

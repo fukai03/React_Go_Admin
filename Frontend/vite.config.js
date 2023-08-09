@@ -7,6 +7,7 @@ import path from 'path'
 export default defineConfig({
     plugins: [react()],
     server: {
+        port: 9999,
         proxy: {
             '/api': {
                 target: 'http://localhost:8888',
@@ -25,5 +26,5 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src'),
             'utils': path.resolve(__dirname, './src/utils'),
         }
-    }
+    },
 })

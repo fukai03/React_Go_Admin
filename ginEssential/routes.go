@@ -13,6 +13,7 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	r.GET("/api/auth/info", middleware.AuthMiddleware(), controller.Info) // 获取用户信息,使用中间件AuthMiddleware保护用户信息接口
 
 	categoryRoutes := r.Group("/categories")
+	categoryRoutes.Use(middleware.AuthMiddleware(), middleware.RecoveryMiddleware()) // 使用中间件保护categories接口
 	categoryController := controller.NewCategoryController()
 	categoryRoutes.POST("", categoryController.Create)
 	categoryRoutes.PUT("/:id", categoryController.Update) // put请求更新所有字段,相当于直接替换
