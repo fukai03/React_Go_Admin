@@ -6,6 +6,7 @@ import {
     UserOutlined,
     SettingOutlined,
     BarsOutlined,
+    FileTextOutlined
 } from '@ant-design/icons'
 
 const Loading = (element) => {
@@ -24,6 +25,7 @@ const ErrorPage = lazy(() => import('../pages/404'));
 const IndustryProject = lazy(() => import('../pages/project/industry'));
 const GovernmentProject = lazy(() => import('../pages/project/government'));
 const AITranslate = lazy(() => import('../pages/ai_translate'));
+const Post = lazy(() => import('../pages/post'));
 
 
 
@@ -68,6 +70,12 @@ export const mainRoutes = {
             label: 'AI翻译',
             element: Loading(<AITranslate />),
             icon: <SettingOutlined />
+        },
+        {
+            path: 'post',
+            label: '文章管理',
+            element: Loading(<Post />),
+            icon: <FileTextOutlined />
         }
     ]
 }

@@ -12,7 +12,7 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	r.POST("/api/auth/login", controller.Login)                           // 登录
 	r.GET("/api/auth/info", middleware.AuthMiddleware(), controller.Info) // 获取用户信息,使用中间件AuthMiddleware保护用户信息接口
 
-	categoryRoutes := r.Group("/categories")
+	categoryRoutes := r.Group("/api/categories")
 	categoryRoutes.Use(middleware.AuthMiddleware(), middleware.RecoveryMiddleware()) // 使用中间件保护categories接口
 	categoryController := controller.NewCategoryController()
 	categoryRoutes.POST("", categoryController.Create)
@@ -20,5 +20,14 @@ func CollectRoute(r *gin.Engine) *gin.Engine {
 	categoryRoutes.GET("/:id", categoryController.Show)
 	categoryRoutes.DELETE("/:id", categoryController.Delete)
 	// categoryRoutes.PATCH("/:id", categoryController.Update) // patch请求只更新部分字段
+
+	postRoutes := r.Group("/api/post")
+	postRoutes.Use(middleware.AuthMiddleware(), middleware.RecoveryMiddleware()) // 使用中间件保护articles接口
+	postController := controller.NewPostController()
+	postRoutes.POST("", postController.Create)
+	postRoutes.PUT("/:id", postController.Update)
+	postRoutes.GET("/:id", postController.Show)
+	postRoutes.DELETE("/:id", postController.Delete)
+	postRoutes.POST("/list", postController.List)
 	return r
 }

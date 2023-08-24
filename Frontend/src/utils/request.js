@@ -23,7 +23,7 @@ request.interceptors.request.use(config => {
 // 响应拦截器
 request.interceptors.response.use(response => {
     // 对响应数据做点什么
-    console.log('response', response);
+    // console.log('response', response);
     return response.data || response
 }, error => {
     // 对响应错误统一处理

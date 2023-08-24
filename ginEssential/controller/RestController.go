@@ -11,3 +11,8 @@ type RestController interface {
 	Show(ctx *gin.Context)
 	Delete(ctx *gin.Context)
 }
+
+// 定义列表接口
+type ListController interface {
+	List(ctx *gin.Context)
+}

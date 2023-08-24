@@ -26,8 +26,56 @@ const getUserInfo = () => {
     })
 }
 
+// 文章创建
+const createPost = (data = {}) => {
+    return request({
+        url: '/post',
+        method: 'post',
+        data
+    })
+}
+
+// 文章修改
+const updatePost = (data = {}) => {
+    const {id, ...rest} = data;
+    return request({
+        url: `/post/${id}`,
+        method: 'put',
+        data: rest
+    })
+}
+// 文章查找
+const getPost = (id) => {
+    return request({
+        url: `/post/${id}`,
+        method: 'get',
+    })
+}
+
+// 文章删除
+const deletePost = (id) => {
+    return request({
+        url: `/post/${id}`,
+        method: 'delete',
+    })
+}
+
+// 文章列表
+const getPostList = (params = {}) => {
+
+    return request({
+        url: `/post/list?pageNum=${params.pageNum}&pageSize=${params.pageSize}`,
+        method: 'post',
+    })
+}
+
 export {
     register,
     login,
-    getUserInfo
+    getUserInfo,
+    createPost,
+    updatePost,
+    getPost,
+    deletePost,
+    getPostList
 }
